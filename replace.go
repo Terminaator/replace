@@ -32,6 +32,7 @@ func replace(path, old, new string) {
 	}
 }
 
+//TODO: refactor
 func ignore(name string) bool {
 	if strings.Contains(name, "git") {
 		return true
