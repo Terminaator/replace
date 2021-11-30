@@ -8,6 +8,7 @@ import (
 	"log"
 	"strings"
 )
+//TODO: refactor
 
 func files(path string) []fs.FileInfo {
 	files, err := ioutil.ReadDir(path)
@@ -32,7 +33,6 @@ func replace(path, old, new string) {
 	}
 }
 
-//TODO: refactor
 func ignore(name string) bool {
 	if strings.Contains(name, "git") {
 		return true
