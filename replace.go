@@ -19,15 +19,28 @@ func files(path string) []fs.FileInfo {
 
 func replace(path, old, new string) {
 	for _, file := range files(path) {
-		if file.IsDir() {
-			replace(file.Name(), old, new)
-		} else {
-			b := content(path, file.Name())
-			if contains(b, old) {
-				replaceString(path, file.Name(), old, new, b)
+		if !ignore(file.Name()) {
+			if file.IsDir() {
+				replace(file.Name(), old, new)
+			} else {
+				b := content(path, file.Name())
+				if contains(b, old) {
+					replaceString(path, file.Name(), old, new, b)
+				}
 			}
 		}
 	}
+}
+
+func ignore(name string) bool {
+	if strings.Contains(name, "git") {
+		return true
+	} else if strings.Contains(name, ".exe") {
+		return true
+	} else if strings.Contains(name, ".git") {
+		return true
+	}
+	return false
 }
 
 func content(path, file string) []byte {
